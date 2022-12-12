@@ -1,0 +1,31 @@
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  ::ng-deep .mat-autocomplete-panel{
+   background:rgba(230, 230, 230);
+ }
+  
+
+  @media (max-width: 767px){
+    .destock{
+      display: none;
+    }
+  }
+  
+  @media (min-width: 770px){
+    .movil{
+      display: none;
+    }
+  }
+  .inputtable{
+    border: none;
+    color: #0146af;
+  }
+  

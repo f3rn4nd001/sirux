@@ -1,0 +1,171 @@
+<div class="resolicion">
+    <div class="destock">
+        <nav class="navbar navbar-expand-lg " style="background: #0146af; " *ngIf="ecodTiff ===  null ">
+            <div class="container-fluid" style="align-items: center;">
+              <a class="navbar-brand" style="padding-left:40%;color: #fff;"  ><h2 style="padding-left:50%;color: #fff;">Nuevo tif</h2></a>
+            </div> 
+          </nav>
+          <nav class="navbar navbar-expand-lg " style="background: #0146af; " *ngIf="ecodTiff !=  null ">
+            <div class="container-fluid" style="align-items: center;">
+              <a class="navbar-brand" style="padding-left:40%;color: #fff;"  ><h2 style="padding-left:50%;color: #fff;">Editar tif</h2></a>
+            </div> 
+          </nav>
+          <div class="row">
+            <div class="col-6"></div>
+            <div class="col-2 mb-4 mt-4">
+              <form class="was-validated container" [formGroup]="ContraformGroup"  >
+                <input type="password" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+              </form>
+            </div> 
+            <div class="mb-4 mt-4 col-2">
+              <button style="min-width:80px; color:white; background:#0146af" type="button" class="btn btn-primary col-10" (click)="redirecTIFFConsulta()">
+                Consulta
+              </button>
+            </div>
+            <div class="mb-4 mt-4 col-2">
+              <button style="min-width:80px; color:white; background:#0146af" [disabled]="validadContras == 0 " type="button" class="btn btn-primary col-10" (click)="Guardar()">
+                Guardar
+              </button>
+            </div>
+          </div>
+          <form class="was-validated container" [formGroup]="NuevoTiffformGroup"  (ngSubmit)="Guardar()">
+            <div class="container row" style="min-width: 100%;">
+              <mat-form-field appearance="fill" class="mb-4 col-md-3" style="color: black;">
+                <mat-label>Estatus</mat-label>
+                <mat-select disableRipple [(ngModel)]="datos.ecodEstatus" formControlName="ecodEstatus" style="color: black;" required>
+                  <mat-option value="1" style="color: black;">Activo</mat-option>
+                  <mat-option value="2" style="color: black;">Cancelado</mat-option>
+                  <mat-option value="5" style="color: black;">Eliminado</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="mb-4 col-md-3">
+                <label class="col-12" for="tTiffControll" >TIF</label>
+                <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tTiffControll" placeholder="TIF" [(ngModel)]="datos.tTiff" formControlName="tTiff">
+              </div>  
+              <div class="mb-4 col-md-3">
+                <label for="tNombreControll" style="text-align: center;">Nombre</label>
+                <input class="form-control" id="tNombreControll" placeholder="Nombre*" [(ngModel)]="datos.tNombre" formControlName="tNombre" required>
+                <div class="invalid-feedback">Este campo es necesario</div>
+              </div> 
+              <div class="mb-4 col-md-3">
+                <label class="col-12" for="tNpmbreCortoControll" >Nombre corto</label>
+                <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tNpmbreCortoControll" placeholder="Nombre corto" [(ngModel)]="datos.tNpmbreCorto" formControlName="tNpmbreCorto">
+              </div> 
+              <div class="mb-4 col-md-3">
+                <label class="col-12" for="tRFCControll" >RFC</label>
+                <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tRFCControll" placeholder="RFC" [(ngModel)]="datos.tRFC" formControlName="tRFC">
+          
+              </div> 
+              <div class="mb-4 col-md-3">
+                <label class="col-12" for="tCPControll" >C.P</label>
+                <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tCPControll" placeholder="C. P." [(ngModel)]="datos.tCP" formControlName="tCP">
+              </div> 
+              <div class="mb-4 col-md-6">
+                <label class="col-12" for="tDireccionControll" >Direccion</label>
+                <input class="col-12" style="border-radius:7px ;min-height: 40px;" id="tDireccionControll" placeholder="Direccion" [(ngModel)]="datos.tDireccion" formControlName="tDireccion">
+              </div>
+              <div class="mb-4 col-md-3">
+                <label style="text-align: center;">Entidade</label>
+                <input required class="form-control" matInput placeholder="Entidade*" [matAutocomplete]="Entidadeauto"  (ngModelChange)="filterEntidades($event)" [(ngModel)]="datos.ecodEntidades" [formControl]="ecodEntidades">
+                <mat-autocomplete class="mat-autocomplete-panel-Entidade" #Entidadeauto="matAutocomplete" [displayWith]="displayEntidades">
+                  <mat-option  style="color: rgb(2, 2, 2);" *ngFor="let state of filtrarEntidade | async" [value]="state">
+                    <span >{{ state.nombres }}</span> 
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+              <div class="mb-4 col-md-3">
+                <label style="text-align: center;">Municipios</label>
+                <input required class="form-control" matInput placeholder="Municipios*" [matAutocomplete]="Municipiosauto"  (ngModelChange)="filterMunicipios($event)" [(ngModel)]="datos.ecodMunicipios" [formControl]="ecodMunicipios">
+                <mat-autocomplete class="mat-autocomplete-panel-Entidade" #Municipiosauto="matAutocomplete" [displayWith]="displayMunicipios">
+                  <mat-option  style="color: rgb(2, 2, 2);" *ngFor="let state of filtrarMunicipios | async" [value]="state">
+                    <span >{{ state.nombres }}</span> 
+                  </mat-option>
+                </mat-autocomplete>
+              </div>
+            </div>
+          </form>
+        </div>
+
+    <div class="movil">
+      <nav class="navbar navbar-expand-lg" style="background: #0146af;" *ngIf="ecodTiff ===  null ">
+        <div class="container-fluid" style="align-items: center;">
+          <a class="navbar-brand" style="padding-left:40%; color: #fff;" ><h3>Nuevo tif</h3></a>
+        </div> 
+      </nav>
+      <nav class="navbar navbar-expand-lg" style="background: #0146af;" *ngIf="ecodTiff !=  null ">
+        <div class="container-fluid" style="align-items: center;">
+          <a class="navbar-brand" style="padding-left:40%; color: #fff;" ><h3>Editar tif</h3></a>
+        </div> 
+      </nav>
+      <div class="row ">
+        <div class="row" style="display: flex; --bs-gutter-x:0rem; padding-top: 15px;">
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">    
+            <a type="button"  style="min-height:45px; border-radius: 0px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-left:none;" class="btn col-12" (click)="redirecTIFFConsulta()">Consulta</a>
+          </div>
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+            <button style=" min-height:45px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-radius: 0px;"  [disabled]="validadContras == 0 " type="button" class="btn col-12" (click)="Guardar()">Guardar</button>
+          </div>
+        </div> 
+          <form class="was-validated container container" [formGroup]="ContraformGroup" style="padding-top: 10px; padding-left: 7%; padding-right: 9%;">
+          <label>Contraseña</label>
+          <input type="password" style="min-height:45px;" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+        </form>
+      </div>
+      <form class="was-validated container mt-5" [formGroup]="NuevoTiffformGroup"  (ngSubmit)="Guardar()">
+        <div class="container row" style="min-width: 100%;">
+          <mat-form-field appearance="fill" class="mb-4 col-md-3" style="color: black;">
+            <mat-label>Estatus</mat-label>
+            <mat-select disableRipple [(ngModel)]="datos.ecodEstatus" formControlName="ecodEstatus" style="color: black;" required>
+              <mat-option value="1" style="color: black;">Activo</mat-option>
+              <mat-option value="2" style="color: black;">Cancelado</mat-option>
+              <mat-option value="5" style="color: black;">Eliminado</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="mb-4 col-md-3">
+            <label class="col-12" for="tTiffControll" >TIF</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tTiffControll" placeholder="TIF" [(ngModel)]="datos.tTiff" formControlName="tTiff">
+          </div> 
+      
+          <div class="mb-4 col-md-3">
+            <label for="tNombreControll" style="text-align: center;">Nombre</label>
+            <input class="form-control" id="tNombreControll" placeholder="Nombre*" [(ngModel)]="datos.tNombre" formControlName="tNombre" required>
+            <div class="invalid-feedback">Este campo es necesario</div>
+          </div> 
+          <div class="mb-4 col-md-3">
+            <label class="col-12" for="tNpmbreCortoControll" >Nombre corto</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tNpmbreCortoControll" placeholder="Nombre corto" [(ngModel)]="datos.tNpmbreCorto" formControlName="tNpmbreCorto">
+          </div> 
+          <div class="mb-4 col-md-3">
+            <label style="text-align: center;">RFC</label>
+            <input  class="col-12" style="border-radius:7px ;min-height: 40px;" id="tRFCControll" placeholder="RFC*" [(ngModel)]="datos.tRFC" formControlName="tRFC" >
+          </div> 
+          <div class="mb-4 col-md-3">
+            <label class="col-12" for="tCPControll" >C.P</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="tCPControll" placeholder="C. P." [(ngModel)]="datos.tCP" formControlName="tCP">
+          </div> 
+          <div class="mb-4 col-md-6">
+            <label class="col-12" for="tDireccionControll" >Direccion</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;" id="tDireccionControll" placeholder="Direccion" [(ngModel)]="datos.tDireccion" formControlName="tDireccion">
+          </div>
+          <div class="mb-4 col-md-3">
+            <label style="text-align: center;">Entidade</label>
+            <input required class="form-control" matInput placeholder="Entidade*" [matAutocomplete]="Entidadeauto"  (ngModelChange)="filterEntidades($event)" [(ngModel)]="datos.ecodEntidades" [formControl]="ecodEntidadesMovil">
+            <mat-autocomplete class="mat-autocomplete-panel-Entidade" #Entidadeauto="matAutocomplete" [displayWith]="displayEntidades">
+              <mat-option  style="color: rgb(2, 2, 2);" *ngFor="let state of filtrarEntidade | async" [value]="state">
+                <span >{{ state.nombres }}</span> 
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div class="mb-4 col-md-3">
+            <label style="text-align: center;">Municipios</label>
+            <input required class="form-control" matInput placeholder="Municipios*" [matAutocomplete]="Municipiosauto"  (ngModelChange)="filterMunicipios($event)" [(ngModel)]="datos.ecodMunicipios" [formControl]="ecodMunicipiosMovil">
+            <mat-autocomplete class="mat-autocomplete-panel-Entidade" #Municipiosauto="matAutocomplete" [displayWith]="displayMunicipios">
+              <mat-option  style="color: rgb(2, 2, 2);" *ngFor="let state of filtrarMunicipios | async" [value]="state">
+                <span >{{ state.nombres }}</span> 
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+        </div>
+      </form>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="resolicion">
+    <div class="destock">
+        <nav class="navbar navbar-expand-lg colorprimary" >
+            <div class="container-fluid" style="align-items: center;">
+              <a class="navbar-brand colorprimary" style="padding-left:30%;"  ><h2 style="padding-left:50%;">Ciudades Entidades</h2></a>
+            </div> 
+          </nav> 
+          <div class="container mt-4">
+            <div class="row col-lg-12 text-center" style="margin-left: 0px;">
+              <label><strong class="labelPrimary">Registros encontrados: {{dataSource ?  dataSource.length : 0}} </strong></label>
+            </div>
+            <div *ngIf="dataSource " style="overflow-y: auto; min-height: 350px;">
+            
+              <table matSort mat-table  [dataSource]="dataSource" class=" container table table-striped mat-elevation-z8 full-data-table" >      
+                <ng-container matColumnDef="ecodestadosmunicipios">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">E</h6></th>
+                  <td mat-cell *matCellDef="let element"> 
+                   
+                   {{element.ecodestadosmunicipios}}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Estado">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Estado</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;padding: 10px;">{{element.Estado}}</td>
+                </ng-container> 
+                <ng-container matColumnDef="Municipio">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">Municipio</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;padding: 10px;">{{element.Municipio}}</td>
+                </ng-container> 
+                
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+              </table> 
+            </div>
+            <mat-paginator class="mat-select-valuecons" style="background:#404040; color:white;" #paginator  showFirstLastButtons   [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>  
+          </div>
+    </div>
+  <!-- MOVIL
+  --------------------------------------------------------------------------------------------------------------------------------------------
+  -->
+    <div class="movil">
+     movil
+    </div>
+  </div>

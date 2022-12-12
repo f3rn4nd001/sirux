@@ -1,0 +1,433 @@
+<div class="resolicion">
+  <div class="destock">
+    <nav class="navbar navbar-expand-lg colorprimary" >
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand colorprimary" style="padding-left:40%;"  ><h2 style="padding-left:50%;">Viajes</h2></a>
+      </div> 
+      <div>
+        <button style="padding-right:100px" type="button" class="dropdown-item btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" color="#fff" class="bi bi-h-circle" viewBox="0 0 16 16">
+            <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-5-3.998V12H9.67V8.455H6.33V12H5V4.002h1.33v3.322h3.34V4.002H11Z"/>
+          </svg>        
+        </button>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" (click)="helpRegistro()">Registrar viaje</button></li>  
+          <li><button class="dropdown-item" (click)="helpEditar()">Editar viaje</button></li>  
+          <li><button class="dropdown-item" (click)="helpMonitorear()">Monitor de viaje</button></li>           
+        </ul>
+      </div>  
+    </nav>  
+    <div style="padding-left: 1%; padding-right: 1%;">
+      <div class="col-12 row mb-4">
+        <div class="col-7"></div>
+        <div class="col-5 row">
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+            <button type="button" style="min-width:80px; color:white; background:#0146af" class="btn  col-10 colorprimary mt-4" (click)="reOperacionesviajenuevoViaje()">Registrar</button>
+          </div>
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+            <button style="min-width:80px ; color:white; background:#0146af" type="button" class="btn btn-primary col-10  mt-4" (click)="Monitorearviajes()">Monitor</button>
+          </div> 
+        </div>     
+      </div>
+      <!--icons-->
+      <div class="col-12 row"> 
+        <div class="col-9" align="end">
+          <button class="btn" (click)="mostrarfiltro()" data-toggle="tooltip" data-placement="right" title="Precione para desplegar los filtros">
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+              <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                <path d="M747 4469 c-162 -38 -297 -178 -337 -348 -24 -103 4 -245 68 -339 15 -22 363 -410 774 -862 l748 -822 2 -798 c3 -789 3 -799 24 -826 49 -67 130 -91 195 -60 19 9 221 166 449 349 299 239 420 342 432 367 16 32 18 77 18 502 l0 466 663 729 c364 401 707 778 761 838 110 122 151 194 169 300 29 171 -60 360 -214 452 -112 67 11 63 -1944 62 -1002 -1 -1786 -5 -1808 -10z m3580 -326 c50 -23 80 -91 64 -143 -8 -27 -204 -250 -782 -886 -424 -467 -778 -860 -788 -874 -14 -21 -17 -80 -21 -494 l-5 -469 -230 -188 c-126 -103 -233 -188 -237 -188 -5 -1 -8 290 -8 647 -1 591 -2 650 -18 678 -9 18 -361 411 -782 874 -421 463 -773 856 -782 873 -34 60 -15 131 45 167 31 20 64 20 1770 20 1607 0 1742 -1 1774 -17z"/>
+              </g>
+            </svg>
+          </button>
+        </div> 
+        <div class="col-1">
+          <button class="btn" (click)="mostrarGraficas()" data-toggle="tooltip" data-placement="right" title="Precione para desplegar las graficas">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="col-2  ">
+          <button class="btn"  (click)="export()" >
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
+              <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+              <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+              <path fill-rule="evenodd" d="M14 4.5V11h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM7.86 14.841a1.13 1.13 0 0 0 .401.823c.13.108.29.192.479.252.19.061.411.091.665.091.338 0 .624-.053.858-.158.237-.105.416-.252.54-.44a1.17 1.17 0 0 0 .187-.656c0-.224-.045-.41-.135-.56a1.002 1.002 0 0 0-.375-.357 2.028 2.028 0 0 0-.565-.21l-.621-.144a.97.97 0 0 1-.405-.176.37.37 0 0 1-.143-.299c0-.156.061-.284.184-.384.125-.101.296-.152.513-.152.143 0 .266.023.37.068a.624.624 0 0 1 .245.181.56.56 0 0 1 .12.258h.75a1.093 1.093 0 0 0-.199-.566 1.21 1.21 0 0 0-.5-.41 1.813 1.813 0 0 0-.78-.152c-.293 0-.552.05-.777.15-.224.099-.4.24-.527.421-.127.182-.19.395-.19.639 0 .201.04.376.123.524.082.149.199.27.351.367.153.095.332.167.54.213l.618.144c.207.049.36.113.462.193a.387.387 0 0 1 .153.326.512.512 0 0 1-.085.29.558.558 0 0 1-.255.193c-.111.047-.25.07-.413.07-.117 0-.224-.013-.32-.04a.837.837 0 0 1-.249-.115.578.578 0 0 1-.255-.384h-.764Zm-3.726-2.909h.893l-1.274 2.007 1.254 1.992h-.908l-.85-1.415h-.035l-.853 1.415H1.5l1.24-2.016-1.228-1.983h.931l.832 1.438h.036l.823-1.438Zm1.923 3.325h1.697v.674H5.266v-3.999h.791v3.325Zm7.636-3.325h.893l-1.274 2.007 1.254 1.992h-.908l-.85-1.415h-.035l-.853 1.415h-.861l1.24-2.016-1.228-1.983h.931l.832 1.438h.036l.823-1.438Z"/>
+            </svg>
+          </button>
+        </div>
+      </div> 
+      <!--icons--> 
+      <!--graficas-->
+      <div *ngIf="mostrargraficas == false"> 
+        <div class="row col-lg-12 text-center" style="margin-left: 0px;">
+          <div class="col-lg-4"></div>
+          <div class="col-5 row">
+            <div class="col-1"></div>
+            <div class="col-2" ><label>Faltantes</label>
+              <div class="half-arc" style="--percentage: {{ViajesPendientes}}%;">
+                <span>{{ViajesPendientes}}%</span>
+              </div>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-2" ><label style="margin-left:40px;">Terminados</label>
+              <div class="half-arc" style="--percentage: {{viajestermindo}}%;margin-left:40px;">
+                <span>{{viajestermindo}}%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--graficas-->
+      <!--filtros-->
+      <div style="padding-left:7%; padding-right: 7%;" *ngIf="mostrar == false">
+        <form [formGroup]="reactiveForm" class="card">
+          <div class="row" style="justify-content: center; padding-left:4%; padding-right: 4%;">
+            <div class="mb-4 col-3 mt-3" style="text-align: center;">
+              <label>Id</label>
+              <input (keyup)="filtro(reactiveForm.value.ecodViaje)" [(ngModel)]="reactiveForm.value.ecodViaje" formControlName="ecodViaje" class="form-control" id="ecodViaje" placeholder="Id" >
+            </div>
+            <div class="mb-4 col-3 mt-3" style="text-align: center;">
+              <label class="col-12" for="Estatus" >Estatus</label>
+              <select (click)="filtro(reactiveForm.value.Estatus)" [(ngModel)]="reactiveForm.value.Estatus" name="select" formControlName="Estatus">
+                <option value=""selected></option>
+                <option value="Activo" >Activo</option>
+                <option value="Eliminado">Eliminado</option>
+                <option value="Cancelado">Cancelado</option>
+                <option value="Terminado">Terminado</option>
+                <option value="En proceso">En proceso</option>
+              </select>
+            </div>
+            <div class="mb-4 col-3 mt-3"style="text-align: center;">
+              <label>Referencia</label>
+              <input (keyup)="filtro(reactiveForm.value.treferencia)" [(ngModel)]="reactiveForm.value.treferencia" formControlName="treferencia" class="form-control" id="treferencia" placeholder="Referencia" >
+            </div>
+            <div class="mb-4 col-3 mt-3"style="text-align: center;">
+              <label>Pedido</label>
+              <input (keyup)="filtro(reactiveForm.value.tpedido)" [(ngModel)]="reactiveForm.value.tpedido" formControlName="tpedido" class="form-control" id="tpedido" placeholder="Pedido" >
+            </div>
+            <div class="mb-4 col-3 mt-3"style="text-align: center;">
+              <label>Cliente</label>
+              <input (keyup)="filtro(reactiveForm.value.cliente)" [(ngModel)]="reactiveForm.value.cliente" formControlName="cliente" class="form-control" id="cliente" placeholder="Cliente" >
+            </div>
+            <div class="mb-4 col-3 mt-3"style="text-align: center;">
+              <label>Operador</label>
+              <input (keyup)="filtro(reactiveForm.value.operador)" [(ngModel)]="reactiveForm.value.operador" formControlName="operador" class="form-control" id="operador" placeholder="Operador" >
+            </div>
+            <div class="mb-4 col-3 mt-3" style="text-align: center;">
+              <label>Proveedor</label>
+              <input (keyup)="filtro(reactiveForm.value.tproveedor)" [(ngModel)]="reactiveForm.value.tproveedor" formControlName="tproveedor" class="form-control" id="tproveedor" placeholder="Proveedor" >
+            </div>
+            <div class="mb-4 col-3 mt-3"style="text-align: center;">
+              <label>Origen</label>
+              <input (keyup)="filtro(reactiveForm.value.tOrigen)" [(ngModel)]="reactiveForm.value.tOrigen" formControlName="tOrigen" class="form-control" id="tOrigen" placeholder="Origen" >
+            </div>
+            <div class="mb-4 col-3 mt-3" style="text-align: center;">
+              <label>Destino</label>
+              <input (keyup)="filtro(reactiveForm.value.tDestino)" [(ngModel)]="reactiveForm.value.tDestino" formControlName="tDestino" class="form-control" id="tDestino" placeholder="Destino" >
+            </div>
+            <div class="mb-4 col-9 mt-3 row" >
+              <label style="text-align: center;">Fecha de salida</label> 
+              <div class="col-4">
+                <label style="text-align: center;">Fh. inicio</label> 
+                <input type="date" (blur)="filtro(reactiveForm.value.fhSalidaInicio)" [(ngModel)]="reactiveForm.value.fhSalidaInicio" formControlName="fhSalidaInicio" class="form-control" id="fhSalidaInicio" placeholder="Fh. Salida inicio" >
+              </div>  
+              <div class="col-4">
+                <label style="text-align: center;">Fh. final</label> 
+                <input type="date" (blur)="filtro(reactiveForm.value.fhSalidaTermino)" [(ngModel)]="reactiveForm.value.fhSalidaTermino" formControlName="fhSalidaTermino" class="form-control" id="fhSalidaTermino" placeholder="Fh. Salida final" >
+              </div>
+            </div>
+            <div class="mb-4 col-6 mt-3 row">
+              <label style="text-align: center;">Fecha de llegada</label> 
+              <div class="col-6">
+                <label style="text-align: center;">Fh. inicio</label> 
+                <input type="date" (blur)="filtro(reactiveForm.value.fhLlegadaInicio)" [(ngModel)]="reactiveForm.value.fhLlegadaInicio" formControlName="fhLlegadaInicio" class="form-control" id="fhLlegadaInicio" placeholder="Fh. Salida inicio" >
+              </div>  
+              <div class="col-6">
+                <label style="text-align: center;">Fh. final</label> 
+                <input type="date" (blur)="filtro(reactiveForm.value.fhLlegadaTermino)" [(ngModel)]="reactiveForm.value.fhLlegadaTermino" formControlName="fhLlegadaTermino" class="form-control" id="fhLlegadaTermino" placeholder="Fh. Salida final" >
+              </div>
+            </div>
+          </div>
+        </form>
+      </div> 
+      <!--filtros--> 
+    </div>
+    <div class="container mt-4">
+      <div class="row col-lg-12 text-center" style="margin-left: 0px;">
+        <label><strong class="labelPrimary">Registros encontrados: {{dataSource ?  dataSource.length : 0}} </strong></label>
+      </div>
+      <div *ngIf="dataSource " style="overflow-y: auto; min-height: 350px;">
+        <table matSort mat-table  [dataSource]="dataSource" class=" container table table-striped mat-elevation-z8 full-data-table" >      
+          <ng-container matColumnDef="E">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">E</h6></th>
+            <td mat-cell *matCellDef="let element"> 
+              <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                  <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                </svg>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <button class="dropdown-item" (click)="DetalleViaje(element!.ecodViaje)">Detalle de viaje</button>
+                  <button class="dropdown-item" *ngIf="tipousuario == 'Operador' || tipousuario == 'Agente' || tipousuario == 'Administrador' " class="dropdown-item" (click)="addComprobanteEntrega(element!.ecodViaje)"> <div *ngIf="tipousuario == 'Operador'">Agregar comprobante de entrega</div> <div *ngIf="tipousuario != 'Operador'">Agregar documentacion</div>  </button>
+                  <button class="dropdown-item" *ngIf="permisos == 'D' || permisos == 'C'" [disabled]="element!.Estatus === 'Terminado'" class="dropdown-item" (click)="EditarViajes(element!.ecodViaje)">Editar</button>
+                  <button [disabled]="element!.Estatus === 'Terminado'" *ngIf="permisos == 'D' || permisos == 'C'" class="dropdown-item"  (click)="Monitorearviaje(element!.ecodViaje)">Monitor</button>
+                </li>
+              </ul>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="ecodViaje">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by ecodViaje"><h6 style="position:relative; top:-9px;">Id</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;padding: 10px;">{{element.ecodViaje}}</td>
+          </ng-container> 
+          <ng-container matColumnDef="Estatus">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by Estatus"><h6 style="position:relative; top:-9px;">Estatus</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.Estatus}}</td>
+          </ng-container>
+          <ng-container matColumnDef="treferencia">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by treferencia"><h6 style="position:relative; top:-9px;">Referencia</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.treferencia}}</td>
+          </ng-container>
+          <ng-container matColumnDef="tpedido">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by tpedido"><h6 style="position:relative; top:-9px;">Pedido</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.tpedido}}</td>
+          </ng-container>
+          <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by cliente"> <h6 style="position:relative; top:-9px;">Cliente</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;  padding: 10px;">{{element.cliente}}</td>
+          </ng-container>
+          <ng-container matColumnDef="operador">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by operador"><h6 style="position:relative; top:-9px;">Operador</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.operador}}</td>
+          </ng-container>
+          <ng-container matColumnDef="ecodProvedor">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by ecodProvedor"><h6 style="position:relative; top:-9px;">Provedor</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.ecodProvedor}}</td>
+          </ng-container>
+          <ng-container matColumnDef="tOrigen">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by tOrigen"><h6 style="position:relative; top:-9px;">Origen</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.tTif}}</td>
+          </ng-container>
+          <ng-container matColumnDef="tDestino">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by tDestino"><h6 style="position:relative; top:-9px;">Destino</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.tiffdestino}}</td>
+          </ng-container>
+          <ng-container matColumnDef="fhSalida">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by fhSalida"><h6 style="position:relative; top:-9px;">F. Salida</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.fhSalida}}</td>
+          </ng-container>
+          <ng-container matColumnDef="fhLlegada">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header sortActionDescription="Sort by fhLlegada"><h6 style="position:relative; top:-9px;">F. Llegada</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;">{{element.fhLlegada}} 
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Link">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" mat-sort-header ><h6 style="position:relative; top:-9px;">Link</h6></th>
+            <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;"><a href="{{element.Link}}" target="_blank">{{element.Link}}</a></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+          <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+        </table> 
+      </div>
+      <mat-paginator class="mat-select-valuecons" style="background:#404040; color:white;" #paginator  showFirstLastButtons   [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>  
+    </div>  
+  </div>
+<!-- MOVIL
+--------------------------------------------------------------------------------------------------------------------------------------------
+-->
+  <div class="movil">
+    <nav class="navbar navbar-expand-lg colorprimary" >
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand colorprimary" style="padding-left:40%;"><h3>Viajes</h3></a>
+      </div> 
+      <div style="position: absolute; left:75%; ">
+        <button style="padding-right:100px" type="button" class="dropdown-item btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" color="#fff" class="bi bi-h-circle" viewBox="0 0 16 16">
+            <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8Zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-5-3.998V12H9.67V8.455H6.33V12H5V4.002h1.33v3.322h3.34V4.002H11Z"/>
+          </svg>        
+        </button>
+        <ul class="dropdown-menu">
+          <li><button class="dropdown-item" (click)="helpRegistro()">Registrar viaje</button></li>  
+          <li><button class="dropdown-item" (click)="helpEditar()">Editar viaje</button></li>  
+          <li><button class="dropdown-item" (click)="helpMonitorear()">Monitor de viaje</button></li>           
+        </ul>
+      </div>  
+    </nav> 
+    <div style="padding-left: 1%; padding-right: 1%;  margin-top: 1em">
+      <div class="row" style="display: flex; --bs-gutter-x:0rem">
+        <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">    
+          <a type="button" style="min-height:45px; border-radius: 0px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-left:none;" class="btn col-12" (click)="reOperacionesviajenuevoViaje()">Registrar</a>
+        </div>
+        <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+          <a style="min-height:45px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-radius: 0px;" type="button" class="btn col-12" (click)="Monitorearviajes()">Monitor</a>
+        </div>
+      </div> 
+      <div class="row">
+        <div class="col-12 row mb-2">
+          <div class="col-6"></div>
+          <!--boton filtro-->
+          <div class="col-2 mt-2">
+            <button class="btn" (click)="mostrarfiltro()">
+              <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                  <path d="M747 4469 c-162 -38 -297 -178 -337 -348 -24 -103 4 -245 68 -339 15 -22 363 -410 774 -862 l748 -822 2 -798 c3 -789 3 -799 24 -826 49 -67 130 -91 195 -60 19 9 221 166 449 349 299 239 420 342 432 367 16 32 18 77 18 502 l0 466 663 729 c364 401 707 778 761 838 110 122 151 194 169 300 29 171 -60  360 -214 452 -112 67 11 63 -1944 62 -1002 -1 -1786 -5 -1808 -10z m3580 -326 c50 -23 80 -91 64 -143 -8 -27 -204 -250 -782 -886 -424 -467 -778 -860 -788  -874 -14 -21 -17 -80 -21 -494 l-5 -469 -230 -188 c-126 -103 -233 -188 -237  -188 -5 -1 -8 290 -8 647 -1 591 -2 650 -18 678 -9 18 -361 411 -782 874 -421  463 -773 856 -782 873 -34 60 -15 131 45 167 31 20 64 20 1770 20 1607 0 1742  -1 1774 -17z"/>
+                </g>
+              </svg>
+            </button>
+          </div>
+          <div class="col-2 mt-2">
+            <button class="btn" (click)="mostrarGraficas()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="col-2 mt-2">
+            <button class="btn" (click)="exportMovil()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-journals" viewBox="0 0 16 16">
+                <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
+                <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
+                <path fill-rule="evenodd" d="M14 4.5V11h-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM7.86 14.841a1.13 1.13 0 0 0 .401.823c.13.108.29.192.479.252.19.061.411.091.665.091.338 0 .624-.053.858-.158.237-.105.416-.252.54-.44a1.17 1.17 0 0 0 .187-.656c0-.224-.045-.41-.135-.56a1.002 1.002 0 0 0-.375-.357 2.028 2.028 0 0 0-.565-.21l-.621-.144a.97.97 0 0 1-.405-.176.37.37 0 0 1-.143-.299c0-.156.061-.284.184-.384.125-.101.296-.152.513-.152.143 0 .266.023.37.068a.624.624 0 0 1 .245.181.56.56 0 0 1 .12.258h.75a1.093 1.093 0 0 0-.199-.566 1.21 1.21 0 0 0-.5-.41 1.813 1.813 0 0 0-.78-.152c-.293 0-.552.05-.777.15-.224.099-.4.24-.527.421-.127.182-.19.395-.19.639 0 .201.04.376.123.524.082.149.199.27.351.367.153.095.332.167.54.213l.618.144c.207.049.36.113.462.193a.387.387 0 0 1 .153.326.512.512 0 0 1-.085.29.558.558 0 0 1-.255.193c-.111.047-.25.07-.413.07-.117 0-.224-.013-.32-.04a.837.837 0 0 1-.249-.115.578.578 0 0 1-.255-.384h-.764Zm-3.726-2.909h.893l-1.274 2.007 1.254 1.992h-.908l-.85-1.415h-.035l-.853 1.415H1.5l1.24-2.016-1.228-1.983h.931l.832 1.438h.036l.823-1.438Zm1.923 3.325h1.697v.674H5.266v-3.999h.791v3.325Zm7.636-3.325h.893l-1.274 2.007 1.254 1.992h-.908l-.85-1.415h-.035l-.853 1.415h-.861l1.24-2.016-1.228-1.983h.931l.832 1.438h.036l.823-1.438Z"/>
+              </svg>
+            </button>
+          </div>
+          <!--boton filtro-->
+          <!--graficas-->
+          <div *ngIf="mostrargraficas == false">graficas</div>
+          <!--filtros-->
+          <div style="position:relative;left: 10%;" align="center" class=" row" *ngIf="mostrar == false">
+            <form [formGroup]="reactiveForm" class="card row">
+              <div class="row" style="justify-content: center; padding-left:1%; padding-right:1%;">
+                <div class="col-6">
+                  <label >Id</label>
+                  <input (keyup)="filtro(reactiveForm.value.ecodViaje)" [(ngModel)]="reactiveForm.value.ecodViaje" formControlName="ecodViaje" class="form-control" id="ecodViaje" placeholder="Id" >
+                </div>
+                <div class="col-6" style="text-align: center;">
+                  <label class="col-12" for="Estatus" >Estatus</label>
+                  <select (click)="filtro(reactiveForm.value.Estatus)" [(ngModel)]="reactiveForm.value.Estatus" name="select" formControlName="Estatus">
+                    <option value=""selected></option>
+                    <option value="Activo" >Activo</option>
+                    <option value="Eliminado">Eliminado</option>
+                    <option value="Cancelado">Cancelado</option>
+                    <option value="Terminado">Terminado</option>
+                    <option value="En proceso">En proceso</option>
+                  </select>
+                </div>
+                <div class="col-6 mt-3">
+                  <label style="text-align: left;">Referencia</label>
+                  <input (keyup)="filtro(reactiveForm.value.treferencia)" [(ngModel)]="reactiveForm.value.treferencia" formControlName="treferencia" class="form-control" id="treferencia" placeholder="Referencia">
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Pedido</label>
+                  <input (keyup)="filtro(reactiveForm.value.tpedido)" [(ngModel)]="reactiveForm.value.tpedido" formControlName="tpedido" class="form-control" id="tpedido" placeholder="Pedido">
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Cliente</label>
+                  <input (keyup)="filtro(reactiveForm.value.cliente)" [(ngModel)]="reactiveForm.value.cliente" formControlName="cliente" class="form-control" id="cliente" placeholder="Cliente">
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Operador</label>
+                  <input (keyup)="filtro(reactiveForm.value.operador)" [(ngModel)]="reactiveForm.value.operador" formControlName="operador" class="form-control" id="operador" placeholder="Operador">
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Origen</label>
+                  <input (keyup)="filtro(reactiveForm.value.tOrigen)" [(ngModel)]="reactiveForm.value.tOrigen" formControlName="tOrigen" class="form-control" id="tOrigen" placeholder="Origen">
+                </div>
+                <div class="col-6 mt-3">
+                  <label>Destino</label>
+                  <input (keyup)="filtro(reactiveForm.value.tDestino)" [(ngModel)]="reactiveForm.value.tDestino" formControlName="tDestino" class="form-control" id="tDestino" placeholder="Destino">
+                </div>
+                <div class="mb-4 col-12 mt-3 row">
+                  <label style="text-align: center;">Fecha de salida</label> 
+                  <div class="col-6">
+                    <label style="text-align: center;">Fh. inicio</label> 
+                    <input type="date" (blur)="filtro(reactiveForm.value.fhSalidaInicio)" [(ngModel)]="reactiveForm.value.fhSalidaInicio" formControlName="fhSalidaInicio" class="form-control" id="fhSalidaInicio" placeholder="Fh. Salida inicio" >
+                  </div>  
+                  <div class="col-6">
+                    <label style="text-align: center;">Fh. final</label> 
+                    <input type="date" (blur)="filtro(reactiveForm.value.fhSalidaTermino)" [(ngModel)]="reactiveForm.value.fhSalidaTermino" formControlName="fhSalidaTermino" class="form-control" id="fhSalidaTermino" placeholder="Fh. Salida final" >
+                  </div>
+                </div>
+                <div class="mb-4 col-12 mt-3 row" >
+                  <label style="text-align: center;">Fecha de llegada</label> 
+                  <div class="col-6">
+                    <label style="text-align: center;">Fh. inicio</label> 
+                    <input type="date" (blur)="filtro(reactiveForm.value.fhLlegadaInicio)" [(ngModel)]="reactiveForm.value.fhLlegadaInicio" formControlName="fhLlegadaInicio" class="form-control" id="fhLlegadaInicio" placeholder="Fh. Salida inicio" >
+                  </div>  
+                  <div class="col-6">
+                    <label style="text-align: center;">Fh. final</label> 
+                    <input type="date" (blur)="filtro(reactiveForm.value.fhLlegadaTermino)" [(ngModel)]="reactiveForm.value.fhLlegadaTermino" formControlName="fhLlegadaTermino" class="form-control" id="fhLlegadaTermino" placeholder="Fh. Salida final" >
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div> 
+          <!--filtros-->
+        </div>
+        <div class="container">
+          <div *ngIf="dataSourceMovil" style="overflow-y: auto; min-height: 350px;">   
+            <table matSort mat-table [dataSource]="dataSourceMovil" class="container table table-striped mat-elevation-z8 full-data-table" >    
+              <ng-container matColumnDef="E">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;" style=" background:#0146af"><h6 style="position:relative; top:-9px; color:white;">E</h6></th>
+                <td mat-cell *matCellDef="let element" style="padding-left: 10px;"> 
+                  <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" color="#0146af" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <button class="dropdown-item" (click)="DetalleViaje(element!.ecodViaje)">Detalle de viaje
+                      </button>
+                      <button class="dropdown-item" *ngIf="tipousuario == 'Operador' || tipousuario == 'Agente' || tipousuario == 'Administrador'" class="dropdown-item" (click)="addComprobanteEntrega(element!.ecodViaje)">Agregar comprobante de entrega</button>
+                      <button class="dropdown-item" *ngIf="permisos == 'D' || permisos == 'C'" [disabled]="element!.Estatus === 'Terminado'" class="dropdown-item" (click)="EditarViajes(element!.ecodViaje)">Editar</button>
+                      <button [disabled]="element!.Estatus === 'Terminado'" *ngIf="permisos == 'D' || permisos == 'C'" class="dropdown-item" (click)="Monitorearviaje(element!.ecodViaje)">Monitor</button>
+                    </li>
+                  </ul>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="ecodViaje">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;" style="color:white; background:#0146af"></th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+                  <mat-expansion-panel class="mat-expansion-panelcliente" hideToggle style="box-shadow:none;color: #0146af;font-size:13px; background:rgba(0,0,0,-1.4);">
+                    <hr>
+                    <mat-expansion-panel-header style=" padding:0px;">  
+                      <mat-panel-title style="color: #0146af; min-width:35%; font-size:13px; flex-basis:2">
+                        <p class="mt-3">{{element.treferencia}}</p>    
+                      </mat-panel-title>
+                      <mat-panel-description style="color: #0146af; font-size:13px; min-width:20%; max-width:25%;">{{element.tpedido}}</mat-panel-description>
+                      <mat-panel-description align="end">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                          <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                      </mat-panel-description>
+                    </mat-expansion-panel-header>
+                      Cliente: {{element.cliente}}<br>
+                      <hr>
+                      Operado: {{element.operador}} <br>
+                      <hr>
+                      <div *ngIf="element.ecodProvedor != null">
+                        Proveedor:{{element.ecodProvedor}}
+                      </div>
+                      <div *ngIf="element.ecodProvedor == null">
+                        Proveedor:N/A
+                      </div><br>
+                      <hr>
+                      Destino:{{element.tiffdestino}} <br>
+                      <hr>
+                      Link espejo : <a href="{{element.Link}}" target="_blank"> {{element.Link}}</a>
+                      <div *ngIf="element.fhLlegada!=null AND element.fhSalida!=null ">Fecha de salida: {{element.fhSalida}}<br>Fecha de llegada: {{element.fhLlegada}}</div> 
+                    </mat-expansion-panel>  
+                  </td>
+                </ng-container>  
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplayMovil"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplayMovil;"></tr>
+              </table>
+              <mat-paginator style="background:#423d3d; color:white;" #paginator2 showFirstLastButtons [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+        </div>     
+      </div>
+    </div>
+  </div>
+</div>

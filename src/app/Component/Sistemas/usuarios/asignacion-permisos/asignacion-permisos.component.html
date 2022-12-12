@@ -1,0 +1,123 @@
+<div class="resolicion">
+  <div class="destock">
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand" style="padding-left:45%">Permisos de usuarios</a>
+      </div>  
+    </nav>  
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Menus Submenus">
+        <div class="row col-lg-12" style="margin-left: 0px;">&nbsp;</div>      
+        <div class="row">
+          <div class="col-6"></div>
+          <div class="col-2 mb-4 mt-4">
+            <form class="was-validated container" [formGroup]="ContraformGroup"  >
+              <input type="password" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+            </form>
+          </div> 
+          <div class="mb-4 mt-4 col-2">
+            <button style="min-width:80px; color:white; background:#0146af" type="button" class="btn btn-primary col-10" (click)="consulta()">
+              Consulta
+            </button>
+          </div>
+          <div class="mb-4 mt-4 col-2">
+            <button style="min-width:80px; color:white; background:#0146af" [disabled]="validadContras == 0 " type="button" class="btn btn-primary col-10" (click)="Guardar()">
+              Guardar
+            </button>
+          </div>
+        </div>
+        <div class="row col-lg-12 w-200" style="margin-left: 0px;">
+          <div style="overflow-y: auto;">
+            <div class="row ">
+              <div class="col-md-4"><strong>Id</strong><br>{{datosUsuarios.ecodUsuarios}}</div>
+              <div class="col-md-4"><strong>Nombres</strong><br>{{datosUsuarios.nombres}}</div>
+              <div class="col-md-2"><strong>Estatus</strong><br>{{datosUsuarios.estatus}}</div>
+              <div class="col-md-2"><strong>RFC</strong><br>{{datosUsuarios.trfc}}</div>  
+            </div>
+            <table class="table container table-striped table-bordered full-data-table">
+              <thead>
+                <tr>
+                  <th>E</th>
+                  <th>Menu</th>
+                  <th>SubMenu</th>    
+                  <th>Controlador</th> 
+                  <th>Permisos</th>   
+                </tr>
+              </thead>
+              <tbody *ngFor="let permisos of FormMenunssubmenus.controls; let i = index; let ultimo = last;">
+                <tr>
+                  <td>
+                    <div class="input-group" *ngIf="ultimo" (click)="addCartaPorteArr(i + 1)">
+                      <button class="material-icons" style="cursor: pointer;">Agregar</button>
+                    </div>
+                    <div class="input-group" *ngIf="!ultimo" (click)="borrarCartaPorteArr(i)">
+                      <button class="material-icons" style="cursor: pointer;">Eliminar</button>
+                    </div>
+                  </td>
+                  <td>
+                    <input matInput [formControl]="permisos.get('MenusCtrl')" aria-label="Menus" required 
+                    placeholder="Menus">
+                  </td>
+                  <td>
+                    <input matInput [formControl]="permisos.get('SubmenusCtrl')" aria-label="Submenus" required 
+                    placeholder="Submenus">
+                  </td>
+                  <td>
+                    <input matInput [formControl]="permisos.get('ControladoresCtrl')" aria-label="Controladores" required 
+                    placeholder="Controladores">
+                  </td>
+                  <td>
+                    <input matInput [formControl]="permisos.get('TPermisosCtrl')" aria-label="TPermisos" required 
+                    placeholder="TPermisos">
+                  </td>
+                </tr>  
+              </tbody>
+              <tbody>
+                <tr>
+                  <td>
+                  </td>
+                  <td><div *ngFor="let item of opMenu">
+                    {{item.ecodMenu}}
+                    {{item.nombres}}
+                  </div></td>
+                  <td> <div *ngFor="let item of opSubMenu">
+                    {{item.ecodSubMenu}}
+                    {{item.url}}
+                  </div></td>
+                  <td>
+                    <div *ngFor="let item of opControladores">
+                      {{item.ecodController}}
+                      {{item.url}}
+                    </div>
+                  </td>
+                  <td>
+                    <div *ngFor="let item of opPermisos">
+                      {{item.ecodPermisos}}
+                      {{item.tNombre}}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Second">
+          
+
+
+         2
+
+
+        </mat-tab>
+      </mat-tab-group>
+  </div>
+
+  <!--    MOVIL
+  
+  --------------------------------------------------------------------------------------------------------------------------------------------
+  
+  -->
+  
+    <div class="movil">movil</div>
+</div>

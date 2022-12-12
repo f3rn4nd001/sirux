@@ -1,0 +1,22 @@
+@media (max-width: 767px){
+    .destock{
+      display: none;
+    }
+  }
+  
+  @media (min-width: 770px){
+    .movil{
+      display: none;
+    }
+  }
+  .colorprimary{
+    background: #0146af;
+    color: #fff;
+  }
+  
+::ng-deep .mat-select-value{
+  color: white;
+}
+::ng-deep .mat-select-arrow{
+  color: white;;
+}

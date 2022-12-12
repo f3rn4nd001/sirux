@@ -1,0 +1,23 @@
+
+ ::ng-deep .mat-autocomplete-panel-operador {
+   background:rgba(238, 238, 238);
+  }
+
+  
+ ::ng-deep .mat-autocomplete-panel-cliente {
+     background:rgba(255, 255, 255 );
+    }
+  
+  @media (max-width: 767px){
+    .destock{
+      display: none;
+    }
+  }
+  
+  @media (min-width: 770px){
+    .movil{
+      display: none;
+    }
+  }
+  
+  

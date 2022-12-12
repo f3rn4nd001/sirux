@@ -1,0 +1,18 @@
+.colorprimary{
+    background: #0146af;
+    color: #fff;
+}
+@media (max-width: 767px){
+    .destock{
+      display: none;
+    }
+  }
+  
+  @media (min-width: 770px){
+    .movil{
+      display: none;
+    }
+  }
+  ::ng-deep .mat-autocomplete-panel-Entidade {
+    background:rgba(255, 255, 255);
+    }

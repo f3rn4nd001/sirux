@@ -1,0 +1,339 @@
+<div class="resolicion">
+  <div class="destock">
+
+  <div class="modal"  tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+          <button type="button"  [mat-dialog-close]="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Detalle generar ">
+        <div class="modal-body">
+          <div class="row ">
+            <div class="col-md-2"><strong>Referencia</strong></div>
+            <div class="col-md-2">{{dtas!.treferencia}}</div>
+            <div class="col-md-2"><strong>Pedido</strong></div>
+            <div class="col-md-2">{{dtas!.tpedido}}</div> 
+            <div class="col-md-2"><strong>Estatus</strong></div>
+            <div class="col-md-2">{{dtas!.Estatus}}</div>
+          </div>
+          <span layout="row"><hr flex/></span>
+	
+          <div class="row">
+            <div class="col-md-2"><strong>Cliente</strong></div>
+            <div class="col-md-2">{{dtas!.cliente}}</div> 
+            <div class="col-md-2"><strong>Operador</strong></div>
+            <div class="col-md-2">{{dtas!.operador}}</div> 
+            <div class="col-md-2"><strong>Provedor</strong></div>
+            <div class="col-md-2">{{dtas!.ecodProvedor}}</div> 
+            <span layout="row" *ngIf="dtas.fhSalida!=null && dtas.fhLlegada!=null"><hr flex/></span>
+          
+            <div class="col-md-2"><strong>Tif origen</strong></div>
+            <div class="col-md-2">{{dtas!.tTif}}</div>
+            <div class="col-md-2"><strong>Tif destino</strong></div>
+            <div class="col-md-2">{{dtas!.tiffdestino}}</div>
+          </div>
+          <span layout="row" *ngIf="dtas.fhSalida!=null && dtas.fhLlegada!=null"><hr flex/></span>
+          <div class="row "> 
+            <div class="col-md-2" *ngIf="dtas.fhSalida!=null" ><strong>F. Salida</strong></div>
+            <div class="col-md-2" *ngIf="dtas.fhSalida!=null">{{dtas!.fhSalida}}</div> 
+            <div class="col-md-2" *ngIf="dtas.fhLlegada!=null"><strong>F. Llegada</strong></div>
+            <div class="col-md-2" *ngIf="dtas.fhLlegada!=null">{{dtas!.fhLlegada}}</div>
+          </div>
+          <span layout="row" *ngIf="dtas.fhSalida!=null && dtas.fhLlegada!=null"><hr flex/></span>
+          <h5 class="text-primary text-center"><strong>Info Tif</strong></h5>
+          <span layout="row"></span>
+          <div class="row col-12"> 
+            <div class="col-md-6 row"><strong>Origen</strong><br>
+              <div class="col-md-12">{{dtas!.nombreEmpresa}}</div> 
+              <div class="col-md-12">Direccion: <br> {{dtas!.tDireccionor}}</div>
+              <div class="col-md-6">{{dtas!.Estado}}</div>
+              <div class="col-md-6">{{dtas!.Municipio}}</div>
+              <div class="col-md-4">C.P. :{{dtas!.tcpor}}</div>
+            </div>
+            <div class="col-md-6 row"><strong>Destino</strong><br>
+              <div class="col-md-12">{{dtas!.nombreempresades}}</div> 
+              <div class="col-md-12">Direccion: <br> {{dtas!.tDirecciondes}}</div>
+              <div class="col-md-6">{{dtas!.estadodes}}</div>
+              <div class="col-md-6">{{dtas!.municipiodes}}</div>
+              <div class="col-md-4">C.P. :{{dtas!.tcpdes}}</div>
+            </div>
+          </div>
+          <span layout="row" *ngIf="mensjerisqls.length>0"><hr flex/></span>
+          <h5 class="text-primary text-center"  *ngIf="mensjerisqls.length>0"><strong>Mensajes</strong></h5>
+          <div style="overflow-x: auto;"  *ngIf="mensjerisqls.length>0" >
+          
+            <table  mat-table  [dataSource]="datatabla"  class=" container table table-striped mat-elevation-z8 full-data-table" >      
+             
+            <ng-container matColumnDef="tMensaje" >
+              <th mat-header-cell *matHeaderCellDef style="text-align: center;"><h6>Mensaje</h6>  </th>
+              <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+                {{element.tMensaje}} 
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="fechaHora">
+              <th mat-header-cell *matHeaderCellDef style="text-align: center;"> <h6>Fecha hora </h6></th>
+              <td mat-cell *matCellDef="let element" style="text-align: center;  padding: 10px;"> 
+                {{element.fechaHora}} 
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplaymens"></tr>
+            <tr mat-row *matRowDef="let row; columns: columnsToDisplaymens;"></tr>
+          </table>
+        
+          </div>
+      </div>
+          </mat-tab>
+          <mat-tab label="Incidencias" *ngIf="incidenciasArr.length>0" >
+            <div style=" min-height: 350px;">
+              <table matSort mat-table [dataSource]="dataincidentes" class=" container table table-striped mat-elevation-z8 full-data-table" >      
+                <ng-container matColumnDef="Estatus" >
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">Estatus</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;padding: 10px;">{{element.estatus}}</td>
+                </ng-container> 
+                <ng-container matColumnDef="treferencia">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">Referencia</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:9em">{{element.treferencia}}</td>
+                </ng-container>
+                <ng-container matColumnDef="tpedido" colums="2">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Pedido</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;">{{element.tpedido}}</td>
+                </ng-container>
+                <ng-container matColumnDef="tmonitoreo">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Monitor</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:5em">
+                    <div *ngIf="element.tmonitoreo == 0" >  No</div><div *ngIf="element.tmonitoreo == 1">  Si</div></td>
+                </ng-container>
+                <ng-container matColumnDef="cliente">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" > <h6 style="position:relative; top:-9px;">Cliente</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;  padding: 10px; min-width:16em;">{{element.cliente}}</td>
+                </ng-container>
+                <ng-container matColumnDef="operador">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Operador</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;  min-width:16em;">{{element.operador}}</td>
+                </ng-container>
+                <ng-container matColumnDef="ecodProvedor">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">Proveedor</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:16em;">                  
+                    <div *ngIf="element.ecodProvedor == null" >N/A</div><div *ngIf="element.ecodProvedor != null">  {{element.ecodProvedor}}</div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="tOrigen">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Origen</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:10em;">{{element.TifOrigen}}</td>
+                </ng-container>
+                <ng-container matColumnDef="tDestino">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary"><h6 style="position:relative; top:-9px;">Destino</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:10em;">{{element.Tifdestino}}</td>
+                </ng-container>
+                <ng-container matColumnDef="fhSalida">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">F. Salida</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;  padding: 10px; min-width:10em;">
+                    <div *ngIf="element.fhSalida == null" >N/A</div><div *ngIf="element.fhSalida != null">  {{element.fhSalida}}</div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="fhLlegada">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">F. Llegada</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;  min-width:10em;"> 
+                    <div *ngIf="element.fhLlegada == null" >N/A</div><div *ngIf="element.fhLlegada != null">  {{element.fhLlegada}}</div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="fhEdicion">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Fh. Edicion</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center;  padding: 10px; min-width:10em;">
+                    <div *ngIf="element.fhEdicion == null" >N/A</div><div *ngIf="element.fhEdicion != null">  {{element.fhEdicion}}</div>               
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="useredit">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Usuario editor</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:16em;">{{element.useredit}} 
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="tIncidentes">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Incidentes</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:16em;" >
+                    <div *ngIf="element.tIncidentes == null" >N/A</div><div *ngIf="element.tIncidentes != null">{{element.tIncidentes}}</div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="tTipoGasto">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">TipoGasto</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:10em;">
+                    <div *ngIf="element.tTipoGasto == null" >N/A</div><div *ngIf="element.tTipoGasto != null">{{element.tTipoGasto}}</div>
+                    
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="tTipoViaje">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">TipoViaje</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:10em;">
+                    <div *ngIf="element.tTipoViaje == null" >N/A</div><div *ngIf="element.tTipoViaje != null">{{element.tTipoViaje}}</div>
+                
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="Link">
+                  <th mat-header-cell *matHeaderCellDef style="text-align: center;" class="colorprimary" ><h6 style="position:relative; top:-9px;">Link</h6></th>
+                  <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px; min-width:10em;">
+                    <div *ngIf="element.Link  == null" >N/A</div><div *ngIf="element.Link != null">  {{element.Link}}</div>
+                    
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+              </table> 
+            </div>
+            
+          </mat-tab>
+        </mat-tab-group>
+    </div>
+  </div>
+
+  </div>
+
+  </div>
+  <div class="movil">
+
+
+    <div class="modal"  tabindex="-1">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+            <button type="button"  [mat-dialog-close]="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Detalle generar ">
+          <div class="modal-body">
+            <div class="row col-12">
+              <div class="col-6"><strong>Referencia</strong><br>{{dtas!.treferencia}} </div>
+              <div class="col-6"><strong>Pedido</strong> <br>{{dtas!.tpedido}} </div>
+              <div class="col-6"><strong>Estatus</strong> <br>{{dtas!.Estatus}} </div>
+            </div>
+            <span layout="row"><hr flex/></span>    
+            <div class="row col-12">
+              <div class="col-12"><strong>Cliente</strong> <br>{{dtas!.cliente}}</div>
+              <div class="col-12"><strong>Operador</strong><br>{{dtas!.operador}}</div>
+              <div class="col-12"><strong>Provedor</strong><br>{{dtas!.ecodProvedor}}</div>
+              <span layout="row" *ngIf="dtas.fhSalida!=null && dtas.fhLlegada!=null"><hr flex/></span>
+              <div class="col-6"><strong>Tif origen</strong><br>{{dtas!.tTif}}</div>
+              <div class="col-6"><strong>Tif destino</strong> <br>{{dtas!.tiffdestino}}</div>
+            </div>
+            <span layout="row" *ngIf="dtas.fhSalida!=null && dtas.fhLlegada!=null"><hr flex/></span>
+            <div class="row col-12"> 
+              <div class="col-6" *ngIf="dtas.fhSalida!=null" ><strong>F. Salida</strong><br>{{dtas!.fhSalida}} </div>
+              <div class="col-6" *ngIf="dtas.fhLlegada!=null"><strong>F. Llegada</strong><br>{{dtas!.fhLlegada}} </div>
+            </div>
+            <span layout="row" *ngIf="dtas.fhSalida!=null && dtas.fhLlegada!=null"><hr flex/></span>
+            <h5 class="text-primary text-center"><strong>Info Tif</strong></h5>
+            <span layout="row"></span>
+          
+            <div class="row col-12"> 
+              <div class="col-12 row"  ><strong>Origen</strong><br>
+              <div class="col-12" >{{dtas!.nombreEmpresa}}</div> 
+              <div class="col-12" >Direccion: <br> {{dtas!.tDireccionor}}</div>
+              <div class="col-6" >{{dtas!.Estado}}</div>
+              <div class="col-6" >{{dtas!.Municipio}}</div>
+              <div class="col-4" >C.P.: {{dtas!.tcpor}}</div>
+              </div>
+              <span layout="row"><hr flex/></span>
+              <div class="col-12 row" ><strong>Destino</strong><br>
+                <div class="col-11" >{{dtas!.nombreempresades}}</div> 
+                <div class="col-12" >Direccion: <br> {{dtas!.tDirecciondes}}</div>
+                <div class="col-6" >{{dtas!.estadodes}}</div>
+                <div class="col-6" >{{dtas!.municipiodes}}</div>
+                <div class="col-4" >C.P.: {{dtas!.tcpdes}}</div>
+                
+                </div>
+            </div>
+            <span layout="row" *ngIf="mensjerisqls.length>0"><hr flex/></span>
+            <h5 class="text-primary text-center"  *ngIf="mensjerisqls.length>0"><strong>Mensajes</strong></h5>
+            <div style="overflow-x: auto;"  *ngIf="mensjerisqls.length>0" >
+            
+              <table  mat-table  [dataSource]="datatabla"  class=" container table table-striped mat-elevation-z8 full-data-table" >      
+               
+              <ng-container matColumnDef="tMensaje" >
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"><h6>Mensaje</h6>  </th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+                  {{element.tMensaje}} 
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="fechaHora">
+                <th mat-header-cell *matHeaderCellDef style="text-align: center;"> <h6>Fecha hora </h6></th>
+                <td mat-cell *matCellDef="let element" style="text-align: center;  padding: 10px;"> 
+                  {{element.fechaHora}} 
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplaymens"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplaymens;"></tr>
+            </table>
+            </div>
+        </div>
+            </mat-tab>
+            <mat-tab label="Incidencias" *ngIf="incidenciasArr.length>0" >
+              
+              <div class="container">
+                <div *ngIf="dataincidentes" style="overflow-y: auto; min-height: 350px;">   
+                  <table matSort mat-table [dataSource]="dataincidentes" class="container table table-striped mat-elevation-z8 full-data-table" >    
+                   
+                    <ng-container matColumnDef="E">
+                      <th mat-header-cell *matHeaderCellDef  style="color:white; background:#0146af; text-align:center">F. H. Edicion</th>
+                      <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+                        <mat-expansion-panel class="mat-expansion-panelcliente" hideToggle style="box-shadow:none;color: #0146af;font-size:13px; background:rgba(0,0,0,-1.4);">
+                          <hr>
+                          <mat-expansion-panel-header style=" padding:0px;">  
+                            <mat-panel-title style="color: #0146af; min-width:35%; font-size:13px; flex-basis:2">
+                              <p class="mt-3">   {{element.fhEdicion}}
+                              </p>    
+                            </mat-panel-title>
+                            <mat-panel-description style="color: #0146af; font-size:13px; min-width:20%; max-width:25%;"></mat-panel-description>
+                            <mat-panel-description align="end">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/>
+                              </svg>
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                          Referencia: {{element.treferencia}}<br>
+                          Pedido: {{element.tpedido}} <br>
+                          Estatus: {{element.estatus}}
+                          <hr>
+                          Esuario que edito: {{element.useredit}}<br>
+                          <hr>
+                          
+                            Cliente: {{element.cliente}}<br>
+                            <hr>
+                            Operado: {{element.operador}} <br>
+                            <hr>
+                            <div *ngIf="element.ecodProvedor != null">
+                              Proveedor:{{element.ecodProvedor}}
+                            </div>
+                            <div *ngIf="element.ecodProvedor == null">
+                              Proveedor:N/A
+                            </div><br>
+                            <hr>
+                            Destino:{{element.Tifdestino}} <br>
+                            <hr>
+                            <div *ngIf="element.fhLlegada!=null AND element.fhSalida!=null ">Fecha de salida: {{element.fhSalida}}<br>Fecha de llegada: {{element.fhLlegada}}</div> 
+                            <hr>
+                           <div *ngIf="element.tmonitoreo == 0" >  Monitoreo: No</div><div *ngIf="element.tmonitoreo == 1"> Monitoreo: Si</div>
+                           <hr>
+                           Incidencias:{{element.tIncidentes}}
+                          </mat-expansion-panel>  
+                        </td>
+                      </ng-container>  
+                      <tr mat-header-row *matHeaderRowDef="columnsToDisplayMovil"></tr>
+                      <tr mat-row *matRowDef="let row; columns: columnsToDisplayMovil;"></tr>
+                    </table>
+                 </div>
+              </div>  
+              
+            </mat-tab>
+          </mat-tab-group>
+      </div>
+    </div>
+  
+    </div>
+
+
+
+  </div>
+</div>

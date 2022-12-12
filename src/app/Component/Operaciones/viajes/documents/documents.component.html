@@ -1,0 +1,121 @@
+<div class="resolicion">
+    <div class="destock">
+        <nav class="navbar navbar-expand-lg " style="background: #0146af;">
+            <div class="container-fluid" style="align-items: center;">
+                <a class="navbar-brand" style="padding-left:35%; color: #fff;"  ><h2 style="color: #fff;">Documentos de viajes</h2></a>
+            </div> 
+        </nav>  
+        <div>
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-2 mb-4 mt-4">
+                  <form class="was-validated container" [formGroup]="ContraformGroup"  >
+                    <input type="password" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+                  </form>
+                </div> 
+                <div class="mb-4 mt-4 col-2">
+                  <button style="min-width:80px; color:white; background:#0146af" type="button" class="btn btn-primary col-10" (click)="reOperacionesviajeconsulta()">
+                    Consulta
+                  </button>
+                </div>
+                <div class="mb-4 mt-4 col-2">
+                  <button style="min-width:80px; color:white; background:#0146af" [disabled]="validadContras == 0 " type="button" class="btn btn-primary col-10" (click)="Guardar()">
+                    Guardar
+                  </button>
+                </div>
+              </div>
+            <div class="col-12 mb-4 mt-4 row">
+                <div class="col-1"></div>
+                <div class="col-2"><strong>Referencia: </strong><br>{{viajes!.treferencia}}</div>
+                <div class="col-2"><strong>Pedido: </strong><br>{{viajes!.tpedido}}</div>
+                <div class="col-2"><strong>Operador: </strong><br>{{viajes!.operador}}</div>
+                <div class="col-2"><strong>proveedor: </strong><br>{{viajes!.ecodProvedor}}</div>
+                <div class="col-2"> <strong>Estatus:</strong><br>{{viajes!.Estatus}} </div>
+                <div class="col-1"></div>
+                <span layout="row" ><hr style="border-top: 0;" flex/></span>
+                <div class="col-1"></div>
+                <div class="col-5"><strong>Origen: </strong><br>{{viajes!.tTif}}<br>{{viajes!.nombreEmpresa}} <br>{{viajes!.Estado}} {{viajes!.Municipio}}</div>
+                <div class="col-5"><strong>Destino: </strong><br>{{viajes!.tiffdestino}}<br>{{viajes!.nombreempresades}} <br>{{viajes!.estadodes}} {{viajes!.municipiodes}}</div>
+                <span layout="row"><hr flex/></span>
+                <h5 class="text-primary text-center"><strong>Documentos</strong></h5>
+                <div class="col-1"></div>
+               
+                <div class="col-3 ">evidencias de entrega
+                    <form class=" container mt-1" [formGroup]="ArcgivosformGroup" (ngSubmit)="Guardar()">
+                        <input type="file" class="form-control" id="ReferenciaControll" placeholder="evidencia de entrega" [(ngModel)]="datos.evidenciaEntrega" formControlName="evidenciaEntrega">
+                    </form>
+                </div>
+                
+                <div class="col-1 row"> 
+                    <div class="col-6">
+                        <a href="" style="position:fixed;padding-top:2%">
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-down" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z"/>
+                                <path fill-rule="evenodd" d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+                              </svg></p></a>
+                    </div>
+                    <div class="col-6">
+                   
+                
+                      <a href="" style="position:fixed;padding-top:2%">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                          </svg>
+                      </a>
+                    </div>
+                </div>
+                
+                
+                
+                <div *ngIf="tipousuario != 'Operador'">
+
+                <div class="col-12">
+
+                    <div class="col-12">
+                        <input type="file">
+                    </div>
+
+                </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- MOVIL
+--------------------------------------------------------------------------------------------------------------------------------------------
+--> 
+  <div class="movil">
+    <nav class="navbar navbar-expand-lg " style="background: #0146af;">
+        <div class="container-fluid" style="align-items: center;">
+            <a class="navbar-brand" style="padding-left:15%; color: #fff;"  ><h2 style="padding-left:10%;color: #fff;">Documentos de viajes</h2></a>
+        </div> 
+    </nav> 
+    <div class="col-12 mb-4 mt-4 row">
+        <div class="col-1"></div>
+        <div class="col-5"><strong>Referencia: </strong><br>{{viajes!.treferencia}}</div>
+        <div class="col-5"><strong>Pedido: </strong><br>{{viajes!.tpedido}}</div>
+        <div class="col-1"></div>
+        <span layout="row" ><hr style="border-top: 0;" flex/></span>
+        
+        <div class="col-1"></div>
+        <div class="col-5"><strong>Operador: </strong><br>{{viajes!.operador}}</div>
+        <div class="col-5"><strong>proveedor: </strong><br>{{viajes!.ecodProvedor}}</div>
+        <div class="col-1"></div>
+        <span layout="row" ><hr style="border-top: 0;" flex/></span>
+        
+        <div class="col-1"></div>
+        <div class="col-4"> <strong>Estatus:</strong><br>{{viajes!.Estatus}} </div>
+        <div class="col-1"></div>
+        <span layout="row" ><hr style="border-top: 0;" flex/></span>
+        <div class="col-1"></div>
+        <div class="col-5"><strong>Origen: </strong><br>{{viajes!.tTif}}<br>{{viajes!.nombreEmpresa}} <br>{{viajes!.Estado}} {{viajes!.Municipio}}</div>
+        <div class="col-5"><strong>Destino: </strong><br>{{viajes!.tiffdestino}}<br>{{viajes!.nombreempresades}} <br>{{viajes!.estadodes}} {{viajes!.municipiodes}}</div>
+        <span layout="row"><hr flex/></span>
+        <div>dubidad e archivos </div>
+        <div *ngIf="tipousuario != 'Operador'">dwadawdawdwa</div>
+    </div>  
+  </div>
+</div>

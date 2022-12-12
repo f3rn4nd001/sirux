@@ -1,0 +1,113 @@
+<div class="resolicion">
+  <div class="destock">
+    <nav class="navbar navbar-expand-lg colorprimary" >
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand colorprimary" style="padding-left:40%;"><h2 style="padding-left:50%;">Usuario</h2></a>
+      </div> 
+    </nav>  
+
+
+    <div style="padding-left: 1%; padding-right: 1%;">
+      <div class="col-12 row mb-4">
+        <div class="col-7"></div>
+        <div class="col-5 row">
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+            <button type="button" style="min-width:80px; color:white; background:#0146af" class="btn  col-10  mt-4" (click)="registrarUsusario()">Registrar</button>
+          </div>
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+          </div> 
+        </div>     
+      </div>
+      <div class="col-12 row"> 
+        <div class="col-11" align="end">
+          <button class="btn" (click)="mostrarfiltro()" data-toggle="tooltip" data-placement="right" title="Precione para desplegar los filtros">
+            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+              <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+                <path d="M747 4469 c-162 -38 -297 -178 -337 -348 -24 -103 4 -245 68 -339 15 -22 363 -410 774 -862 l748 -822 2 -798 c3 -789 3 -799 24 -826 49 -67 130 -91 195 -60 19 9 221 166 449 349 299 239 420 342 432 367 16 32 18 77 18 502 l0 466 663 729 c364 401 707 778 761 838 110 122 151 194 169 300 29 171 -60 360 -214 452 -112 67 11 63 -1944 62 -1002 -1 -1786 -5 -1808 -10z m3580 -326 c50 -23 80 -91 64 -143 -8 -27 -204 -250 -782 -886 -424 -467 -778 -860 -788 -874 -14 -21 -17 -80 -21 -494 l-5 -469 -230 -188 c-126 -103 -233 -188 -237 -188 -5 -1 -8 290 -8 647 -1 591 -2 650 -18 678 -9 18 -361 411 -782 874 -421 463 -773 856 -782 873 -34 60 -15 131 45 167 31 20 64 20 1770 20 1607 0 1742 -1 1774 -17z"/>
+              </g>
+            </svg>
+          </button>
+        </div> 
+      </div>
+
+      <div class="card" *ngIf="mostrar == false">
+        <form class="was-validated" [formGroup]="Formfiltro" >
+    
+        <div class="row" style="justify-content: center;">
+          <div class="mb-4 col-3 mt-3"style="text-align: center;">
+            <label for="fReferencia" >Id</label>
+            <input (keyup)="filtro(Formfiltro.value.ecodUsuarios)" [(ngModel)]="Formfiltro.value.ecodUsuarios" formControlName="ecodUsuarios" class="form-control" id="ecodUsuarios" placeholder="Id" >
+          </div>
+  
+          <div class="mb-4 col-3 mt-3"style="text-align: center;">
+            <label for="fReferencia" >RFC</label>
+            <input (keyup)="filtro(Formfiltro.value.trfc)" [(ngModel)]="Formfiltro.value.trfc" formControlName="trfc" class="form-control" id="trfc" placeholder="RFC" >
+          </div>
+          <div class="mb-4 col-3 mt-3"style="text-align: center;">
+            <label>Nombre</label>
+            <input (keyup)="filtro(Formfiltro.value.Nombre)" [(ngModel)]="Formfiltro.value.Nombre" formControlName="Nombre" class="form-control" id="Nombre" placeholder="Nombre" >
+          </div>
+        </div>
+        </form>
+      </div> 
+      <table mat-table *ngIf="!spinner" [dataSource]="dataSource"  class="mt-5 container table table-striped table-bordered full-data-table">
+        <ng-container matColumnDef="E" >
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;"> E </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+           <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu">
+            <li >
+              <button class="dropdown-item" (click)="DetalleUsuarios(element!.ecodUsuarios)">Ver detalles
+              </button>
+              <button class="dropdown-item" *ngIf="permisos == 'D' || permisos == 'C'" [disabled]="element!.Estatus === 'Terminado'" class="dropdown-item" (click)="EditarUsurio(element!.ecodUsuarios)">Editar</button>
+              <button class="dropdown-item" *ngIf="permisos == 'D' || permisos == 'C'" [disabled]="element!.Estatus === 'Terminado'" class="dropdown-item" (click)="AsignarPErmisos(element!.ecodUsuarios)">Asignar permisos</button>
+            </li>          
+          </ul>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="ecodUsuarios" >
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;"> ecodUsuarios </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;"> 
+            {{element.ecodUsuarios}} 
+          </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="estatus" >
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;">Estatus </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;"> 
+            {{element.estatus}} 
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="trfc" >
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;">RFC </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;"> 
+            {{element.trfc}} 
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="nombres" >
+          <th mat-header-cell *matHeaderCellDef style="text-align: center;">Nombre </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center; padding: 10px;"> 
+            {{element.nombres}} 
+          </td>
+        </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    </table>
+   <mat-paginator #paginator [pageSize]="10" showFirstLastButtons   [pageSizeOptions]="[5, 10, 25, 100]">
+    </mat-paginator>
+    </div>
+
+
+
+
+    
+  
+ 
+    
+  
+  <div class="movil">movil</div>
+</div>

@@ -1,0 +1,69 @@
+<div class="resolicion">
+  <div class="destock" *ngIf="ecodUsuarios != null">
+    <nav class="navbar navbar-expand-lg colorprimary">
+      <div class="container-fluid" style="align-items: center;">
+        <a  class="navbar-brand colorprimary" style="padding-left:45%" >Eliminar usuario</a>   
+      </div>  
+    </nav>
+    <div *ngIf="ecodUsuarios != null" class="container">
+      <div class="row">
+        <div class="col-6"></div>
+        <div class="col-2 mb-4 mt-4">
+          <form class="was-validated container" [formGroup]="ContraformGroup"  >
+            <input (blur)="validadContrasena(ContraformGroup.value.Contrasena)" type="password" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+          </form>
+        </div>  
+        <div class="mb-4 mt-4 col-2" style="padding-left: 1%;">
+          <button style="min-width:80px; max-height: 40px;"  type="button" class="btn colorprimary col-10" (click)="ConsultaUsuario()">Consulta</button>
+        </div>
+        <div class="mb-4 mt-4 col-2">
+          <button style="min-width:80px; max-height: 40px;" [disabled]="validadContras == 0 " (click)="Guardar()" type="button" class="btn colorprimary col-10">Guardar</button>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-3 mb-4 mt-4"><strong>RFC:  </strong><br>{{datos.tRFC}}</div>
+        <div class="col-5 mb-4 mt-4" ><strong>Nombre: </strong><br>{{datos.nombres}}</div>
+        <div class="col-3 mb-4 mt-4"><strong>codigo: </strong><br>{{datos.ecodUsuarios}}</div>
+        <div class="col-8 mb-4 mt-4">
+          <form class="was-validated" [formGroup]="reactiveForm"(ngSubmit)="Guardar()">
+            <label for="">Motivo</label>
+            <textarea name="" id="" cols="60" formControlName="tMotivo" rows="5" placeholder="Se elimino por: "></textarea>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="movil" *ngIf="ecodUsuarios != null">
+    <nav class="navbar navbar-expand-lg colorprimary">
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand colorprimary" style="padding-left:28%">Eliminar usuario</a>   
+      </div>  
+    </nav>
+    <div class="row">
+      <div class="row" style="display: flex; --bs-gutter-x:0rem; padding-top: 15px;">
+        <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">    
+          <a type="button"  style="min-height:45px; border-radius: 0px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-left:none;" class="btn col-12" (click)="ConsultaUsuario()">Consulta</a>
+        </div>
+        <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+          <button style=" min-height:45px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-radius: 0px;"  [disabled]="validadContras == 0 " type="button" class="btn col-12" (click)="Guardar()">Guardar</button>
+        </div>
+      </div> 
+      <form class="was-validated container container" [formGroup]="ContraformGroup" style="padding-top: 10px; padding-left: 5%; padding-right: 12%;">
+        <label for="ClienteControll">Contraseña</label>
+        <input type="password" style="min-height:45px;" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+      </form>
+    </div>
+    <div class="row mt-3 container">
+      <div class="col-6  "><strong>RFC:  </strong><br>{{datos.tRFC}}</div>
+      <div class="col-6 " ><strong>Nombre: </strong><br>{{datos.nombres}}</div>
+      <div class="col-6 mt-3 "><strong>codigo: </strong><br>{{datos.ecodUsuarios}}</div>
+      <div class="col-8 mt-3">
+        <form class="" [formGroup]="reactiveForm"(ngSubmit)="Guardar()">
+          <label for=""><strong>Motivo</strong></label>
+          <textarea name="" id="" cols="40" formControlName="tMotivo" rows="5" placeholder="Se elimino por: "></textarea>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>

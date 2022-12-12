@@ -1,0 +1,316 @@
+<div class="resolicion">
+  <div class="destock">
+    <nav  class="navbar navbar-expand-lg " style="background: #0146af; " *ngIf="ecodViaje ===  null ">
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand" style="padding-left:40%;color: #fff;"  ><h2 style="padding-left:50%;color: #fff;">Nuevo viaje</h2></a>
+      </div> 
+    </nav>
+    <nav  class="navbar navbar-expand-lg " style="background: #0146af; " *ngIf="ecodViaje !=  null ">
+      <div class="container-fluid" style="align-items: center;">
+        <a class="navbar-brand" style="padding-left:40%;color: #fff;"  ><h2 style="padding-left:50%;color: #fff;">Editar viaje</h2></a>
+      </div> 
+    </nav>
+
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-2 mb-4 mt-4">
+        <form class="was-validated container" [formGroup]="ContraformGroup"  >
+          <input type="password" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+        </form>
+      </div> 
+      <div class="mb-4 mt-4 col-2">
+        <button style="min-width:80px; color:white; background:#0146af" type="button" class="btn btn-primary col-10" (click)="reOperacionesviajeconsulta()">
+          Consulta
+        </button>
+      </div>
+      <div class="mb-4 mt-4 col-2">
+        <button style="min-width:80px; color:white; background:#0146af" [disabled]="validadContras == 0 " type="button" class="btn btn-primary col-10" (click)="Guardar()">
+          Guardar
+        </button>
+      </div>
+    </div>
+ 
+    <form class="was-validated container" [formGroup]="nuevoviajeformGroup"  (ngSubmit)="Guardar()">
+      <div class="mb-4 form-switch">
+        <input [(ngModel)]="datos.checkmonitor" [checked]="datos!.tmonitoreo" formControlName="checkmonitor" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">. Monitorear viaje</label>
+      </div>
+      
+      <div class="container row" style="min-width: 100%;">
+        <mat-form-field appearance="fill" class="mb-4 col-md-3" style="color: black;">
+          <mat-label>Estatus</mat-label>
+          <mat-select disableRipple [(ngModel)]="datos.ecodEstatus" formControlName="ecodEstatus" style="color: black;" required>
+            <mat-option value="1" style="color: black;">Activo</mat-option>
+            <mat-option value="2" style="color: black;">Cancelado</mat-option>
+            <mat-option value="3" style="color: black;">En proceso</mat-option>
+            <mat-option value="4" style="color: black;">Terminado</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="mb-4 col-md-3">
+          <label for="ReferenciaControll" style="text-align: center;">Referencia</label>
+          <input (blur)="validadREferencia(datos.treferencia)" class="form-control" id="ReferenciaControll" placeholder="Referencia*" [(ngModel)]="datos.treferencia" formControlName="treferencia" required>
+          <div class="invalid-feedback">Este campo es necesario</div>
+        </div>  
+        <div class="mb-4 col-md-3 " >
+          <label for="PedidoControll" style="text-align: center;">Pedido</label>
+          <input class="form-control" id="PedidoControll" placeholder="Pedido*"   [(ngModel)]="datos.tpedido" formControlName="tpedido" required>
+          <div class="invalid-feedback">Este campo es necesario</div>
+        </div> 
+        <div class="mb-4 col-md-3 d">
+          <label style="text-align: center;">Cliente</label>
+          <input required class="form-control" matInput placeholder="Cliente*" [matAutocomplete]="Clienteauto"  (ngModelChange)="filterClientes($event)" [(ngModel)]="datos.ecodClientes" [formControl]="ecodClientes">
+          <mat-autocomplete class="mat-autocomplete-panel-cliente" #Clienteauto="matAutocomplete" [displayWith]="displayClientes">
+            <mat-option  style="color: rgb(0, 0, 0);" *ngFor="let state of filtrarCliente | async" [value]="state">
+              <span >{{ state.nombres }}</span> 
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="mb-4 col-md-3">
+          <label style="text-align: center;">Operador</label>
+          <input required class="form-control" matInput placeholder="Operador*" [matAutocomplete]="Operadorauto" (ngModelChange)="filterOperador($event)" [(ngModel)]="datos.ecodOperados" [formControl]="ecodOperados">
+          <mat-autocomplete class="mat-autocomplete-panel-operador" #Operadorauto="matAutocomplete" [displayWith]="displayClientes">
+            <mat-option style="color: rgb(0, 0, 0);" *ngFor="let state of filtrarOperador | async" [value]="state">
+              <span>{{ state.nombres }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div class="mb-4 col-md-3">
+          <label class="col-12" for="ProveedorControll" >Proveedor</label>
+          <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="ProveedorControll" placeholder="Proveedor*" [(ngModel)]="datos.ecodProvedor" formControlName="ecodProvedor">
+        </div> 
+        <mat-form-field appearance="fill" class="mb-4 col-md-3">
+          <mat-label>Tipo de viaje</mat-label>
+          <mat-select disableRipple [(ngModel)]="datos.tTipoViaje" formControlName="tTipoViaje">
+            <mat-option value="Intermedia">Intermedia</mat-option>
+            <mat-option value="Origen nacional">Origen nacional</mat-option>
+            <mat-option value="Destino final nacional">Destino final nacional</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="mb-4 col-md-3" style="color: black;">
+          <mat-label>Tipo de Gastos</mat-label>
+          <mat-select disableRipple [(ngModel)]="datos.tTipoGasto" formControlName="tTipoGasto" style="color: black;">
+            <mat-option value="Estadias" style="color: black;">Estadias</mat-option>
+            <mat-option value="Gastos locales" style="color: black;">Gastos locales</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <div class="mb-4 col-md-3">
+          <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Tiff Origen">
+              <input required class="form-control" matInput placeholder="Tiff Origen*" [matAutocomplete]="TiffOrigeneauto"  (ngModelChange)="filteTiffOrigen($event)" [(ngModel)]="datos.ecodtifforigen" [formControl]="ecodtifforigen">
+              <mat-autocomplete class="mat-autocomplete-panel-cliente" #TiffOrigeneauto="matAutocomplete" [displayWith]="displayTiffOrigen">
+                <mat-option  style="color:rgb(0, 0, 0);" *ngFor="let state of filtrarTiffOrigen | async" [value]="state">
+                  <span >{{ state.tTif }}</span> 
+                </mat-option>
+              </mat-autocomplete>
+            </mat-tab>
+            <mat-tab label="Empresa origen">
+              <input required class="form-control" matInput placeholder="Nombre origen*" [matAutocomplete]="NombreOrigenauto" (ngModelChange)="filteNombreOrigen($event)" [(ngModel)]="datos.ecodNombreOrigen" [formControl]="ecodNombreOrigen">
+              <mat-autocomplete class="mat-autocomplete-panel-cliente" #NombreOrigenauto="matAutocomplete" [displayWith]="displayTnombreOrigen">
+                <mat-option  style="color: rgb(0, 0, 0);" *ngFor="let state of filtrarNombreOrigen | async" [value]="state">
+                  <span >{{ state.tNombre }}</span> 
+                </mat-option>
+              </mat-autocomplete>
+            </mat-tab>
+          </mat-tab-group>      
+        </div> 
+        <div class="mb-4 col-md-3">
+          <mat-tab-group mat-align-tabs="center">
+            <mat-tab label="Tiff Destino">
+              <input required class="form-control" matInput placeholder="Tiff Destino*" [matAutocomplete]="TiffDestinoeauto"  (ngModelChange)="filteTiffDestino($event)" [(ngModel)]="datos.ecodtiffDestino" [formControl]="ecodtiffDestino">
+              <mat-autocomplete class="mat-autocomplete-panel-cliente" #TiffDestinoeauto="matAutocomplete" [displayWith]="displayTiffDestino">
+                <mat-option  style="color:rgb(0, 0, 0);" *ngFor="let state of filtrarTiffDestino | async" [value]="state">
+                  <span >{{ state.tTif }}</span> 
+                </mat-option>
+              </mat-autocomplete>
+            </mat-tab>
+            <mat-tab label="Empresa Destino">
+              <input required class="form-control" matInput placeholder="Nombre Destino*" [matAutocomplete]="NombreDestinoauto" (ngModelChange)="filteNombreDestino($event)" [(ngModel)]="datos.ecodNombreDestino" [formControl]="ecodNombreDestino">
+              <mat-autocomplete class="mat-autocomplete-panel-cliente" #NombreDestinoauto="matAutocomplete" [displayWith]="displayTnombreDestino">
+                <mat-option  style="color: rgb(0, 0, 0);" *ngFor="let state of filtrarNombreDestino | async" [value]="state">
+                  <span >{{ state.tNombre }}</span> 
+                </mat-option>
+              </mat-autocomplete>
+            </mat-tab>
+          </mat-tab-group>      
+        </div> 
+        <div class="mb-4 col-md-3">
+          <label  class="col-12" for="FhsalidaControll" style="text-align: center;">Fecha de salida</label>
+          <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="FhsalidaControll" type="date" placeholder="" [(ngModel)]="datos.fhSalida"  formControlName="fhSalida">
+          <div class="invalid-feedback">Termine de llenar</div>
+        </div>
+        <div class="mb-4 col-md-3">
+          <label  class="col-12" for="FhLlesagaControll" style="text-align: center;">Fecha de llegada</label>
+          <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="FhLlesagaControll" type="date" placeholder="" [(ngModel)]="datos.fhLlegada"  formControlName="fhLlegada">
+          <div class="invalid-feedback">Termine de llenar</div>
+        </div> 
+        <div class="mb-4 col-md-3">
+          <label class="col-12" for="LinkControll" >Link C. Espejo</label>
+          <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="LinkControll" placeholder="Link C. Espejo*" [(ngModel)]="datos.Link" formControlName="Link">
+        </div>   
+        <div *ngIf="ecodViaje !=  null " class="col-12"> 
+          <label for="FhLlesagaControll"  class="col-12">Incidentes de viaje</label>
+          <textarea cols="90" rows="4" class="col-6"[(ngModel)]="datos.tincidentes"  formControlName="tincidentes" placeholder="Incidentes de viaje"></textarea>
+        </div>   
+      </div>
+    </form>
+  </div>
+
+  <!--    MOVIL
+  
+  --------------------------------------------------------------------------------------------------------------------------------------------
+  
+  -->
+  
+    <div class="movil">
+      <nav  class="navbar navbar-expand-lg" style="background: #0146af;" *ngIf="ecodViaje ===  null ">
+        <div class="container-fluid" style="align-items: center;">
+          <a class="navbar-brand" style="padding-left:40%; color: #fff;" ><h3>Nuevo viaje</h3></a>
+        </div> 
+      </nav>
+      <nav  class="navbar navbar-expand-lg" style="background: #0146af;" *ngIf="ecodViaje !=  null ">
+        <div class="container-fluid" style="align-items: center;">
+          <a class="navbar-brand" style="padding-left:40%; color: #fff;" ><h3>Editar viaje</h3></a>
+        </div> 
+      </nav>
+      <div class="row ">
+        <div class="row" style="display: flex; --bs-gutter-x:0rem; padding-top: 15px;">
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">    
+            <a type="button"  style="min-height:45px; border-radius: 0px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-left:none;" class="btn col-12" (click)="reOperacionesviajeconsulta()">Consulta</a>
+          </div>
+          <div class="col-6" *ngIf="permisos == 'D' || permisos == 'C'">
+            <button style=" min-height:45px; color:white; background:#3f951c; border-color:#285299; border-block-start:none; border-bottom-width:revert; border-radius: 0px;"  [disabled]="validadContras == 0 " type="button" class="btn col-12" (click)="Guardar()">Guardar</button>
+          </div>
+        </div> 
+          <form class="was-validated container container" [formGroup]="ContraformGroup" style="padding-top: 10px; padding-left: 7%; padding-right: 9%;">
+          <label for="ClienteControll">Contraseña</label>
+          <input type="password" style="min-height:45px;" (keyup)="validadContrasena(ContraformGroup.value.Contrasena)" [(ngModel)]="datos.Contrasena" formControlName="Contrasena" class="form-control" id="Contrasena" placeholder="Contrasena*"  required>
+        </form>
+      </div>
+     
+
+      
+   
+      <form class="was-validated container mt-5" [formGroup]="nuevoviajeformGroup" (ngSubmit)="Guardar()">
+        <div class="mb-4 form-switch">
+          <input [(ngModel)]="datos.checkmonitor" [checked]="datos!.tmonitoreo" formControlName="checkmonitor" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+          <label class="form-check-label" for="flexSwitchCheckDefault">. Monitorear viaje</label>
+        </div>
+        <div class="container row" style="min-width: 100%;">
+          <mat-form-field appearance="fill" class="mb-4 col-md-3" style="color: black;">
+            <mat-label>Estatus</mat-label>
+            <mat-select disableRipple [(ngModel)]="datos.ecodEstatus" formControlName="ecodEstatus" style="color: black;" required>
+              <mat-option value="1" style="color: black;">Activo</mat-option>
+              <mat-option value="2" style="color: black;">Cancelado</mat-option>
+              <mat-option value="3" style="color: black;">En proceso</mat-option>
+              <mat-option value="4" style="color: black;">Terminado</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="mb-4 col-md-3">
+            <label for="ReferenciaControll" style="text-align: center;">Referencia</label>
+            <input (blur)="validadREferencia(datos.treferencia)" class="form-control" id="ReferenciaControll" placeholder="Referencia*" [(ngModel)]="datos.treferencia" formControlName="treferencia" required>
+            <div class="invalid-feedback">Este campo es necesario</div>
+          </div>  
+          <div class="mb-4 col-md-3 " >
+            <label for="PedidoControll" style="text-align: center;">Pedido</label>
+            <input class="form-control" id="PedidoControll" placeholder="Pedido*"  [(ngModel)]="datos.tpedido" formControlName="tpedido" required>
+            <div class="invalid-feedback">Este campo es necesario</div>
+          </div> 
+          <div class="mb-4 col-md-3 d">
+            <label style="text-align: center;">Cliente</label>
+            <input required class="form-control" matInput placeholder="Cliente*" [matAutocomplete]="Clienteauto"  (ngModelChange)="filterClientes($event)" [(ngModel)]="datos.ecodClientes" [formControl]="ecodClientesMovil">
+            <mat-autocomplete class="mat-autocomplete-panel-cliente" #Clienteauto="matAutocomplete" [displayWith]="displayClientes">
+              <mat-option  *ngFor="let state of filtrarCliente | async" [value]="state">
+                <span >{{state.nombres }}</span> 
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div class="mb-4 col-md-3">
+            <label style="text-align: center;">Operador</label>
+            <input required class="form-control" matInput placeholder="Operador*" [matAutocomplete]="Operadorauto" (ngModelChange)="filterOperador($event)" [(ngModel)]="datos.ecodOperados" [formControl]="ecodOperadosMovil">
+            <mat-autocomplete class="mat-autocomplete-panel-operador" #Operadorauto="matAutocomplete" [displayWith]="displayClientes">
+              <mat-option *ngFor="let state of filtrarOperador | async" [value]="state">
+                <span>{{ state.nombres }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div class="mb-4 col-md-3">
+            <label class="col-12" for="ProveedorControll" >Proveedor</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="ProveedorControll" placeholder="Proveedor*" [(ngModel)]="datos.ecodProvedor" formControlName="ecodProvedor">
+          </div> 
+          <mat-form-field appearance="fill" class="mb-4 col-md-3">
+            <mat-label>Tipo de viaje</mat-label>
+            <mat-select disableRipple [(ngModel)]="datos.tTipoViaje" formControlName="tTipoViaje">
+              <mat-option value="Intermedia">Intermedia</mat-option>
+              <mat-option value="Origen nacional">Origen nacional</mat-option>
+              <mat-option value="Destino final nacional">Destino final nacional</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="mb-4 col-md-3" style="color: black;">
+            <mat-label>Tipo de Gastos</mat-label>
+            <mat-select disableRipple [(ngModel)]="datos.tTipoGasto" formControlName="tTipoGasto" style="color: black;">
+              <mat-option value="Estadias" style="color: black;">Estadias</mat-option>
+              <mat-option value="Gastos locales" style="color: black;">Gastos locales</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="mb-4 col-md-3">
+            <mat-tab-group mat-align-tabs="center">
+              <mat-tab label="Tiff Origen">
+                <input required class="form-control" matInput placeholder="Tiff Origen*" [matAutocomplete]="TiffOrigeneauto"  (ngModelChange)="filteTiffOrigen($event)" [(ngModel)]="datos.ecodtifforigen" [formControl]="ecodtifforigenMovil">
+                <mat-autocomplete class="mat-autocomplete-panel-cliente" #TiffOrigeneauto="matAutocomplete" [displayWith]="displayTiffOrigen">
+                  <mat-option  style="color:rgb(0, 0, 0);" *ngFor="let state of filtrarTiffOrigen | async" [value]="state">
+                    <span >{{ state.tTif }}</span> 
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-tab>
+              <mat-tab label="Empresa origen">
+                <input required class="form-control" matInput placeholder="Nombre origen*" [matAutocomplete]="NombreOrigenauto" (ngModelChange)="filteNombreOrigen($event)" [(ngModel)]="datos.ecodNombreOrigen" [formControl]="ecodNombreOrigenMovil">
+                <mat-autocomplete class="mat-autocomplete-panel-cliente" #NombreOrigenauto="matAutocomplete" [displayWith]="displayTnombreOrigen">
+                  <mat-option  style="color: rgb(0, 0, 0);" *ngFor="let state of filtrarNombreOrigen | async" [value]="state">
+                    <span >{{ state.tNombre }}</span> 
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-tab>
+            </mat-tab-group>      
+          </div> 
+          <div class="mb-4 col-md-3">
+            <mat-tab-group mat-align-tabs="center">
+              <mat-tab label="Tiff Destino">
+                <input required class="form-control" matInput placeholder="Tiff Destino*" [matAutocomplete]="TiffDestinoeauto"  (ngModelChange)="filteTiffDestino($event)" [(ngModel)]="datos.ecodtiffDestino" [formControl]="ecodtiffDestinoMovil">
+                <mat-autocomplete class="mat-autocomplete-panel-cliente" #TiffDestinoeauto="matAutocomplete" [displayWith]="displayTiffDestino">
+                  <mat-option  style="color:rgb(0, 0, 0);" *ngFor="let state of filtrarTiffDestino | async" [value]="state">
+                    <span >{{ state.tTif }}</span> 
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-tab>
+              <mat-tab label="Empresa Destino">
+                <input required class="form-control" matInput placeholder="Nombre Destino*" [matAutocomplete]="NombreDestinoauto" (ngModelChange)="filteNombreDestino($event)" [(ngModel)]="datos.ecodNombreDestino" [formControl]="ecodNombreDestinoMovil">
+                <mat-autocomplete class="mat-autocomplete-panel-cliente" #NombreDestinoauto="matAutocomplete" [displayWith]="displayTnombreDestino">
+                  <mat-option  style="color: rgb(0, 0, 0);" *ngFor="let state of filtrarNombreDestino | async" [value]="state">
+                    <span >{{ state.tNombre }}</span> 
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-tab>
+            </mat-tab-group>      
+          </div> 
+         <div class="mb-4 col-md-3">
+            <label  class="col-12" for="FhsalidaControll" style="text-align: center;">Fecha de salida</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="FhsalidaControll" type="date" placeholder="" [(ngModel)]="datos.fhSalida"  formControlName="fhSalida">
+          </div>
+          <div class="mb-4 col-md-3">
+            <label  class="col-12" for="FhLlesagaControll" style="text-align: center;">Fecha de llegada</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="FhLlesagaControll" type="date" placeholder="" [(ngModel)]="datos.fhLlegada"  formControlName="fhLlegada">
+          </div>
+          <div class="mb-4 col-md-3">
+            <label class="col-12" for="LinkControll" >Link C. Espejo</label>
+            <input class="col-12" style="border-radius:7px ;min-height: 40px;"  id="LinkControll" placeholder="Link C. Espejo*" [(ngModel)]="datos.Link" formControlName="Link">
+          </div>  
+          <div *ngIf="ecodViaje !=  null " class="col-12"> 
+            <label for="FhLlesagaControll"  class="col-12">Incidentes de viaje</label>
+           
+            <textarea cols="90" rows="4" class="col-12"[(ngModel)]="datos.tincidentes"  formControlName="tincidentes" placeholder="Incidentes de viaje"></textarea>
+          </div>   
+        </div>
+      </form>
+    </div>
+ 

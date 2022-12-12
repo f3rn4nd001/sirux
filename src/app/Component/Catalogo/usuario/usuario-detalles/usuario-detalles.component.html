@@ -1,0 +1,68 @@
+
+  <div class="modal"  tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+          <button type="button"  [mat-dialog-close]="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+        <div class="modal-body">
+         
+        
+          <div class="row ">
+            <div class="col-md-2"><strong>RFC: </strong></div>
+            <div class="col-md-3"> {{usuario.trfc}} </div>
+            <div class="col-md-3"><strong> </strong></div>
+            <div class="col-md-2"><strong>Estatus: </strong></div>
+            <div class="col-md-2"> {{usuario.estatus}} </div>
+          </div>
+          <span layout="row"><hr flex/></span>         
+          <div class="row ">
+            <div class="col-md-2"><strong>Nombre: </strong></div>
+            <div class="col-md-3"> {{usuario.nombres}} </div>
+            <div class="col-md-3"><strong> </strong></div>
+            <div class="col-md-2"><strong>F. Creacion: </strong></div>
+            <div class="col-md-2"> {{usuario.fCreacion}} </div>
+          </div>
+
+          <span layout="row" *ngIf="usuario.estatus != 'Activo'" ><hr flex/></span>         
+          <h5 class="text-primary text-center" *ngIf="usuario.estatus != 'Activo'"><strong>Estatus de eliminacion</strong></h5>
+          <div class="row" *ngIf="usuario.estatus != 'Activo'">
+            <div class="col-md-2"><strong>usuario: </strong></div>
+            <div class="col-md-3"> {{usuario.eliminacion}} </div>
+            <div class="col-md-3"><strong>F. Eliminacion: </strong></div>
+            <div class="col-md-4"> {{usuario.fhEliminacion}} </div>
+          </div>
+         
+          <span layout="row" *ngIf="usuario.estatus != 'Activo'" ><hr flex/></span>         
+          <div class="row" *ngIf="usuario.estatus != 'Activo'">
+            <div class="col-md-2"><strong> Motivo</strong> </div>
+            <div class="col-md-10"> {{usuario.tMotivoEliminacion}} </div>
+          </div>
+
+          <span layout="row" *ngIf="relcelres.length>0 || relMailres.length>0 "><hr flex/></span>
+          <h5 class="text-primary text-center" *ngIf="relcelres.length>0 || relMailres.length>0"><strong>Contacto</strong></h5>
+          <div style="overflow-y: auto;" *ngIf="relcelres.length>0|| relMailres.length>0 " >
+            <table class="table table-striped table-bordered full-data-table"   >
+              <thead>
+                <tr>
+                
+              </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="relcelres.length>0">
+                  <td class="col-md-2" ><strong>No. Telefono: </strong></td>
+                  <td class="col-md-2" *ngFor="let sa of relcelres">{{sa!.tcelular}}</td>
+              </tr>
+              <tr *ngIf="relMailres.length>0">
+                <td class="col-md-2"><strong>Correo: </strong></td>
+                <td class="col-md-2" *ngFor="let sas of relMailres">{{sas!.tcorreo}}</td>
+            </tr>
+            </tbody>
+            </table>
+          </div>
+
+      </div>
+    </div>
+  </div>
